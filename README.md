@@ -32,21 +32,21 @@ Syntrix AI is a smart AI-powered learning backend built using FastAPI. It allows
 ---
 
 # 📁 Project Structure
-
 app/
-├── api/
+│
+├── api/              # All API routes
 │   ├── auth.py
 │   ├── upload.py
 │   ├── qa.py
 │   ├── mcq.py
 │
-├── core/
-│   ├── auth.py
-│   ├── config.py
-│   ├── deps.py
+├── core/             # Core logic
+│   ├── auth.py       # JWT creation & verification
+│   ├── config.py     # Environment variables
+│   ├── deps.py       # Dependencies (get_current_user)
 │
 ├── db/
-│   ├── database.py
+│   ├── database.py   # DB connection
 │
 ├── models/
 │   ├── user.py
@@ -63,8 +63,6 @@ app/
 │   ├── chunking.py
 │
 ├── main.py
-
----
 
 # ⚙️ Installation
 
