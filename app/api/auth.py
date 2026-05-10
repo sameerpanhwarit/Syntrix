@@ -15,9 +15,6 @@ class LoginRequest(BaseModel):
     password: str
 
 
-# =====================
-# DB DEPENDENCY
-# =====================
 def get_db():
     db = SessionLocal()
     try:
@@ -25,10 +22,6 @@ def get_db():
     finally:
         db.close()
 
-
-# =====================
-# REGISTER API (MISSING BEFORE)
-# =====================
 @router.post("/register")
 def register(name: str, email: str, password: str, db: Session = Depends(get_db)):
 
@@ -46,25 +39,6 @@ def register(name: str, email: str, password: str, db: Session = Depends(get_db)
         "message": "User created successfully"
     }
 
-
-# =====================
-# LOGIN API
-# =====================
-# @router.post("/login")
-# def login(email: str, password: str, db: Session = Depends(get_db)):
-    
-#     print(f"Credentials: {email} - {password}")
-#     user = db.query(User).filter(User.email == email).first()
-
-#     if not user or user.password != password:
-#         return {"message": "Invalid credentials"}
-
-#     token = create_access_token(user.id)
-
-#     return {
-#         "access_token": token,
-#         "token_type": "bearer"
-#     }
 
 @router.post("/login")
 def login(data: LoginRequest, db: Session = Depends(get_db)):
