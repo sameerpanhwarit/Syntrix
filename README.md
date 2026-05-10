@@ -33,20 +33,19 @@ Syntrix AI is a smart AI-powered learning backend built using FastAPI. It allows
 
 # 📁 Project Structure
 app/
-│
-├── api/              # All API routes
+├── api/                  # All API routes
 │   ├── auth.py
 │   ├── upload.py
 │   ├── qa.py
 │   ├── mcq.py
 │
-├── core/             # Core logic
-│   ├── auth.py       # JWT creation & verification
-│   ├── config.py     # Environment variables
-│   ├── deps.py       # Dependencies (get_current_user)
+├── core/                # Core logic
+│   ├── auth.py          # JWT creation & verification
+│   ├── config.py        # Environment variables
+│   ├── deps.py          # Dependencies (get_current_user)
 │
 ├── db/
-│   ├── database.py   # DB connection
+│   ├── database.py      # DB connection
 │
 ├── models/
 │   ├── user.py
@@ -68,5 +67,5 @@ app/
 
 ## 1. Clone Repo
 ```bash
-git clone https://github.com/your-repo/syntrix-ai.git
+git clone https://github.com/sameerpanhwarit/syntrix-ai.git
 cd syntrix-ai
