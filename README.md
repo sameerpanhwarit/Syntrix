@@ -29,40 +29,6 @@ Syntrix AI is a smart AI-powered learning backend built using FastAPI. It allows
 - FAISS (vector search)
 - python-dotenv
 
----
-
-# 📁 Project Structure
-app/
-├── api/                  # All API routes
-│   ├── auth.py
-│   ├── upload.py
-│   ├── qa.py
-│   ├── mcq.py
-│
-├── core/                # Core logic
-│   ├── auth.py          # JWT creation & verification
-│   ├── config.py        # Environment variables
-│   ├── deps.py          # Dependencies (get_current_user)
-│
-├── db/
-│   ├── database.py      # DB connection
-│
-├── models/
-│   ├── user.py
-│   ├── book.py
-│   ├── history.py
-│
-├── services/
-│   ├── embeddings.py
-│   ├── rag.py
-│   ├── llm.py
-│
-├── utils/
-│   ├── file_parser.py
-│   ├── chunking.py
-│
-├── main.py
-
 # ⚙️ Installation
 
 ## 1. Clone Repo
