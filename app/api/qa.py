@@ -19,17 +19,11 @@ from app.core.deps import get_current_user
 router = APIRouter()
 
 
-# =========================
-# REQUEST MODEL
-# =========================
 class QuestionRequest(BaseModel):
     question: str
     book_id: str
 
 
-# =========================
-# DATABASE DEPENDENCY
-# =========================
 def get_db():
     db = SessionLocal()
     try:
@@ -37,10 +31,6 @@ def get_db():
     finally:
         db.close()
 
-
-# =========================
-# ASK AI API
-# =========================
 @router.post("/ask")
 def ask_question(
     data: QuestionRequest,
@@ -51,9 +41,6 @@ def ask_question(
     question = data.question
     book_id = data.book_id
 
-    # =========================
-    # VERIFY BOOK OWNERSHIP
-    # =========================
     book = db.query(Book).filter(
         Book.id == book_id,
         Book.user_id == user_id
@@ -64,14 +51,8 @@ def ask_question(
             "answer": "Unauthorized or book not found"
         }
 
-    # =========================
-    # EMBED QUESTION
-    # =========================
     query_embedding = get_embeddings([question])[0]
 
-    # =========================
-    # SEARCH RELEVANT CHUNKS
-    # =========================
     results = search(
         query_embedding,
         book_id=book_id,
@@ -83,16 +64,11 @@ def ask_question(
             "answer": "No relevant content found in this book."
         }
 
-    # =========================
-    # BUILD CONTEXT
-    # =========================
     chunks = [r["text"] for r in results[:3]]
 
     context = "\n\n".join(chunks)
 
-    # =========================
-    # STRICT PROMPT
-    # =========================
+
     prompt = f"""
 You are a strict AI assistant.
 
@@ -123,14 +99,9 @@ Question:
 {question}
 """
 
-    # =========================
-    # CALL LLM
-    # =========================
     answer_raw = call_llm(prompt)
 
-    # =========================
-    # SAFE JSON PARSING
-    # =========================
+
     try:
         answer_json = json.loads(answer_raw)
 
@@ -140,9 +111,6 @@ Question:
             "raw_output": answer_raw
         }
 
-    # =========================
-    # OPTIONAL VALIDATION
-    # =========================
     validation = verify_answer(
         answer_json.get("answer", ""),
         context
@@ -154,9 +122,6 @@ Question:
             "evidence": ""
         }
 
-    # =========================
-    # SAVE TO DATABASE
-    # =========================
     qa_entry = AskAI(
         id=str(uuid.uuid4()),
         user_id=user_id,
@@ -168,9 +133,7 @@ Question:
     db.add(qa_entry)
     db.commit()
 
-    # =========================
-    # FINAL RESPONSE
-    # =========================
+
     return {
         "answer": answer_json.get("answer", ""),
         "evidence": answer_json.get("evidence", ""),

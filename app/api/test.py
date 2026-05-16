@@ -80,17 +80,12 @@ def submit_test(
             2
         )
 
-    # ====================================
-    # UPDATE DATABASE
-    # ====================================
+
     assessment.correct_answers = correct_count
     assessment.score = score
 
     db.commit()
 
-    # ====================================
-    # FINAL RESPONSE
-    # ====================================
     return {
         "assessment_id": assessment.id,
         "user_id": user_id,

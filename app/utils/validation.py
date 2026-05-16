@@ -5,9 +5,7 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 
 
 def verify_answer(answer: str, context: str, threshold: float = 0.6) -> bool:
-    """
-    Semantic validation using embeddings (NOT string matching)
-    """
+
 
     if not answer or not context:
         return False

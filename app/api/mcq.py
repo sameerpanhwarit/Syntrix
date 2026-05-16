@@ -21,17 +21,11 @@ from app.services.rag import search
 router = APIRouter()
 
 
-# ====================================
-# REQUEST MODEL
-# ====================================
 class MCQRequest(BaseModel):
     book_id: str
     number_of_questions: int
 
 
-# ====================================
-# DATABASE DEPENDENCY
-# ====================================
 def get_db():
     db = SessionLocal()
     try:
@@ -39,10 +33,6 @@ def get_db():
     finally:
         db.close()
 
-
-# ====================================
-# GENERATE MCQS API
-# ====================================
 @router.post("/generate-mcqs")
 def generate_mcqs(
     data: MCQRequest,
@@ -53,9 +43,6 @@ def generate_mcqs(
     book_id = data.book_id
     number_of_questions = data.number_of_questions
 
-    # ====================================
-    # VERIFY BOOK OWNERSHIP
-    # ====================================
     book = db.query(Book).filter(
         Book.id == book_id,
         Book.user_id == user_id
@@ -66,9 +53,7 @@ def generate_mcqs(
             "message": "Unauthorized or book not found"
         }
 
-    # ====================================
-    # GET RELEVANT BOOK CONTENT
-    # ====================================
+
     query_embedding = get_embeddings(
         ["Generate MCQs from this book"]
     )[0]
