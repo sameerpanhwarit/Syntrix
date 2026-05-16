@@ -69,16 +69,11 @@ def generate_mcqs(
             "message": "No relevant content found in this book"
         }
 
-    # ====================================
-    # BUILD CONTEXT
-    # ====================================
+
     chunks = [r["text"] for r in results]
 
     context = "\n\n".join(chunks)
 
-    # ====================================
-    # STRICT MCQ PROMPT
-    # ====================================
     prompt = f"""
 You are a strict AI exam generator.
 
